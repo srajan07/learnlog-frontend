@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { getPost, deletePost } from "../../services/communityService";
+import { getPost, deletePost,toggleReaction } from "../../services/communityService";
 import { useAuth } from "../../Context/AuthContext";
 
 function PostDetail() {
@@ -9,6 +9,8 @@ function PostDetail() {
   const { user } = useAuth();
 
   const [post, setPost] = useState(null);
+  const [reactionCount, setReactionCount] = useState(0);
+  const [reacted, setReacted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deleting, setDeleting] = useState(false);
@@ -17,7 +19,9 @@ function PostDetail() {
     async function fetchPost() {
       try {
         const response = await getPost(id);
-        setPost(response.data);
+        const { post, reactionCount } = response.data;
+        setPost(post);
+        setReactionCount(reactionCount);
       } catch (error) {
         console.error("Post detail error:", error);
         setError(
@@ -49,7 +53,16 @@ function PostDetail() {
       setDeleting(false);
     }
   };
-
+const handleReaction = async () => {
+  try {
+    const response = await toggleReaction(post._id);
+    const { reacted, count } = response;
+    setReactionCount(count);
+    setReacted(reacted);
+  } catch (error) {
+   console.log("error while reacting ");
+  }
+};
   if (loading) {
     return (
       <main className="min-h-screen bg-[#F7F7F3] flex items-center justify-center px-5">
@@ -187,8 +200,19 @@ function PostDetail() {
                 </span>
               ))}
             </div>
+        
           )}
-
+             <button
+       onClick={handleReaction}
+       className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 ${
+       reacted
+      ? "bg-[#E8EEE8] text-[#3F5D3A] border-[#B9CDB4] hover:bg-[#DCE6DC]"
+      : "bg-[#F0F1EC] text-[#5C6B57] border-[#DDE1D6] hover:bg-[#E4E8E0]"
+      }`}
+      >
+  🤔 I struggled with this too{" "}
+  <span className="font-semibold">{reactionCount}</span>
+  </button>
         </article>
 
         {/* FOOTER */}

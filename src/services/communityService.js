@@ -34,3 +34,7 @@ export const deletePost = async (id) => {
   const response = await api.delete(`/community/posts/${id}`);
   return response.data;
 };
+export const toggleReaction = async (postId) => {
+   const response = await api.post(`/community/posts/${postId}/reaction`);
+  return response.data;
+};
