@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getPosts } from "../../services/communityService";
+import { Link, useNavigate } from "react-router-dom";
+import { getPosts, toggleReaction } from "../../services/communityService";
 import { useAuth } from "../../Context/AuthContext";
 
 function SkeletonCard() {
@@ -22,11 +22,43 @@ function SkeletonCard() {
 
 function CommunityPage() {
   const { user } = useAuth();
-
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [reactingPostId, setReactingPostId] = useState(null);
 
+  const handleReaction = async (postId) => {
+    if (!user) {
+    navigate("/login");
+    return;
+  }
+
+  if (reactingPostId === postId) return;
+
+  setReactingPostId(postId);
+  try {
+    const response = await toggleReaction(postId);
+
+    const { reacted, count } = response;
+
+    setPosts((currentPosts) =>
+      currentPosts.map((post) =>
+        post._id === postId
+          ? {
+              ...post,
+              reacted,
+              reactionCount: count,
+            }
+          : post
+      )
+    );
+  } catch (error) {
+    console.error("Error reacting to post:", error);
+  } finally {
+    setReactingPostId(null);
+  }
+};
   const fetchPosts = async () => {
     setLoading(true);
     setError("");
@@ -211,6 +243,41 @@ function CommunityPage() {
                         </span>
                       </div>
                     </Link>
+                <div className="mt-4 flex items-center gap-3">
+  {/* Reaction */}
+  <button
+    onClick={() => handleReaction(post._id)}
+    disabled={reactingPostId === post._id}
+    className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-all ${
+      post.reacted
+        ? "bg-violet-100 border-violet-300 text-violet-700 hover:bg-violet-200"
+        : "bg-purple-50 border-purple-200 text-purple-800 hover:bg-purple-100"
+    } ${
+      reactingPostId === post._id
+        ? "opacity-60 cursor-not-allowed"
+        : "cursor-pointer"
+    }`}
+  >
+    {reactingPostId === post._id ? (
+      <span>Reacting...</span>
+    ) : (
+      <>
+        <span>🤔</span>
+        <span>I struggled with this too</span>
+        <span className="font-semibold">{post.reactionCount || 0}</span>
+      </>
+    )}
+  </button>
+
+  {/* Comments */}
+  <button
+    className="inline-flex items-center gap-2 rounded-full border border-[#E2E3DE] bg-[#F7F7F3] px-3.5 py-2 text-sm font-medium text-[#70757D] hover:bg-[#F0F1EC] hover:text-[#20242B] transition-all"
+  >
+    <span>💬</span>
+    <span>Comments</span>
+    <span className="font-semibold">{post.commentCount || 0}</span>
+  </button>
+</div>
                   </article>
                 );
               })}

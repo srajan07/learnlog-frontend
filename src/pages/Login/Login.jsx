@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext.jsx";
+import bg from "../../assets/bg.png";
 
 function Login() {
   const { login } = useAuth();
@@ -31,17 +32,20 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F0] px-4">
+    <div
+      className="min-h-screen flex items-center justify-center bg-[#F5F5F0] bg-cover bg-center bg-no-repeat px-4"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       <div className="w-full max-w-sm">
         {/* Logo & Heading */}
-     <div className="text-center mb-8 space-y-2">
-  <img
-    src="/src/assets/logo.png"
-    alt="Learnlog logo"
-    className="h-8 sm:h-9 mx-auto object-contain"
-  />
-  <p className="text-sm text-[#6B7280]">Sign in to your workspace</p>
-    </div>
+        <div className="text-center mb-8 space-y-2">
+          <img
+            src="/src/assets/logo.png"
+            alt="Learnlog logo"
+            className="h-8 sm:h-9 mx-auto object-contain"
+          />
+          <p className="text-sm text-[#6B7280]">Sign in to your workspace</p>
+        </div>
         {/* Card */}
         <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-md p-7 space-y-5">
           {error && (
@@ -89,13 +93,13 @@ function Login() {
                 </button>
               </div>
               <div className="text-right">
-  <Link
-    to="/forgot-password"
-    className="text-sm text-[#70757D] hover:text-[#253044] transition-colors"
-  >
-    Forgot password?
-  </Link>
-</div>
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-[#70757D] hover:text-[#253044] transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             <button

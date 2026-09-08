@@ -14,14 +14,15 @@ function PostDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deleting, setDeleting] = useState(false);
-
+const [reacting, setReacting] = useState(false);
   useEffect(() => {
     async function fetchPost() {
       try {
         const response = await getPost(id);
-        const { post, reactionCount } = response.data;
+        const { post, reactionCount ,reacted} = response.data;
         setPost(post);
         setReactionCount(reactionCount);
+        setReacted(reacted);
       } catch (error) {
         console.error("Post detail error:", error);
         setError(
@@ -54,13 +55,25 @@ function PostDetail() {
     }
   };
 const handleReaction = async () => {
+  if (!user) {
+  navigate("/login");
+  return;
+}
+  if (reacting) return;
+
+  setReacting(true);
+
   try {
     const response = await toggleReaction(post._id);
+
     const { reacted, count } = response;
+
     setReactionCount(count);
     setReacted(reacted);
   } catch (error) {
-   console.log("error while reacting ");
+    console.log("error while reacting");
+  } finally {
+    setReacting(false);
   }
 };
   if (loading) {
@@ -202,17 +215,24 @@ const handleReaction = async () => {
             </div>
         
           )}
-             <button
-       onClick={handleReaction}
-       className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 ${
-       reacted
-      ? "bg-[#E8EEE8] text-[#3F5D3A] border-[#B9CDB4] hover:bg-[#DCE6DC]"
-      : "bg-[#F0F1EC] text-[#5C6B57] border-[#DDE1D6] hover:bg-[#E4E8E0]"
-      }`}
-      >
-  🤔 I struggled with this too{" "}
-  <span className="font-semibold">{reactionCount}</span>
-  </button>
+ <button
+  onClick={handleReaction}
+  disabled={reacting}
+  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 ${
+    reacted
+      ? "bg-violet-100 text-violet-700 border-violet-300 hover:bg-violet-200"
+      : "bg-purple-50 text-purple-800 border-purple-200 hover:bg-purple-100"
+  } ${reacting ? "opacity-60 cursor-not-allowed" : ""}`}
+>
+  {reacting ? (
+    "Reacting..."
+  ) : (
+    <>
+      🤔 I struggled with this too{" "}
+      <span className="font-semibold">{reactionCount}</span>
+    </>
+  )}
+</button>
         </article>
 
         {/* FOOTER */}

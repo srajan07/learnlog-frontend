@@ -16,7 +16,7 @@ import CreatePost from "./pages/Community/CreatePost";
 import MyJourney from "./pages/Community/MyJourney";
 import EditPost from "./pages/Community/EditPost";
 import PostDetail from "./pages/Community/PostDetail";
-
+import Sample from "./pages/Dashboard/Sample";
 import Profile from "./pages/Profile/Profile";
 
 function App() {
@@ -143,7 +143,7 @@ function App() {
           path="/"
           element={<Navigate to="/dashboard" replace />}
         />
-
+        <Route path="/sample" element={<Sample />} />
         <Route
           path="*"
           element={<Navigate to="/dashboard" replace />}

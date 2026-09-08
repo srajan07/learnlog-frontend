@@ -6,27 +6,11 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const displayName = user?.name || user?.fullName || "User";
   const userInitial = displayName.charAt(0).toUpperCase();
-
-  const navLinks = [
-    { label: "Home", path: "/dashboard" },
-    { label: "Community", path: "/community" },
-  ];
-
-  const isActive = (path) => {
-    if (path === "/dashboard") {
-      return location.pathname === "/dashboard";
-    }
-
-    if (path === "/community") {
-      return location.pathname.startsWith("/community");
-    }
-
-    return false;
-  };
 
   const handleLogout = async () => {
     await logout();
@@ -48,31 +32,10 @@ function Navbar() {
           >
             <img
               src="/src/assets/logo.png"
-              alt="Clickedlog logo"
+              alt="Learnlog logo"
               className="h-10 sm:h-11 object-contain"
             />
           </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const active = isActive(link.path);
-
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
-                    active
-                      ? "bg-[#F0F1EC] text-[#253044] font-semibold"
-                      : "text-[#70757D] hover:text-[#20242B] hover:bg-[#F7F7F3]"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
 
           {/* Desktop Profile + Logout */}
           <div className="hidden md:flex items-center gap-3">
@@ -105,15 +68,20 @@ function Navbar() {
           <div className="flex md:hidden items-center gap-2">
             <Link
               to="/profile"
-              className="w-8 h-8 rounded-full bg-[#253044] text-white flex items-center justify-center text-xs font-bold"
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                location.pathname === "/profile"
+                  ? "bg-[#253044] text-white ring-2 ring-[#E2E3DE]"
+                  : "bg-[#253044] text-white"
+              }`}
             >
               {userInitial}
             </Link>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 rounded-lg text-[#374151] border border-[#E2E3DE] bg-[#FCFCF9] hover:bg-[#F7F7F3]"
+              className="p-1.5 rounded-lg text-[#374151] border border-[#E2E3DE] bg-[#FCFCF9] hover:bg-[#F7F7F3] transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? "✕" : "☰"}
             </button>
@@ -124,25 +92,7 @@ function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden py-3 border-t border-[#E2E3DE] space-y-1 bg-[#FCFCF9]">
 
-            {navLinks.map((link) => {
-              const active = isActive(link.path);
-
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    active
-                      ? "bg-[#F0F1EC] text-[#253044] font-semibold"
-                      : "text-[#70757D] hover:text-[#20242B] hover:bg-[#F7F7F3]"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-
+            {/* Profile */}
             <Link
               to="/profile"
               onClick={() => setMobileMenuOpen(false)}
@@ -155,6 +105,7 @@ function Navbar() {
               Profile
             </Link>
 
+            {/* Account info + Logout */}
             <div className="pt-2 border-t border-[#E2E3DE] px-3 flex items-center justify-between gap-3">
               <span className="text-xs text-[#8A8F96] truncate">
                 Signed in as{" "}

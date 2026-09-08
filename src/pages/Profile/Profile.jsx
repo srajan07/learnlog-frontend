@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import api from "../../services/api";
 import { getMyPosts } from "../../services/communityService";
 
 function Profile() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
@@ -99,23 +101,37 @@ function Profile() {
       {/* Learning Activity */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
+        {/* Journey Notes */}
         <div className="bg-[#FCFCF9] rounded-xl border border-[#E2E3DE] p-5">
-          <div className="text-2xl font-bold text-[#20242B]">
-            {journeyPostsCount}
-          </div>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-2xl font-bold text-[#20242B]">
+                {journeyPostsCount}
+              </div>
 
-          <div className="text-xs text-[#8A8F96] mt-1 font-medium">
-            Journey Notes
+              <div className="text-xs text-[#8A8F96] mt-1 font-medium">
+                Journey Notes
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => navigate("/community/me")}
+              className="text-xs font-medium text-[#253044] border border-[#E2E3DE] bg-[#F7F7F3] px-3 py-2 rounded-lg hover:bg-[#F0F1EC] hover:border-[#C7CBD1] transition-colors"
+            >
+              My Journey →
+            </button>
           </div>
         </div>
 
+        {/* Learnlog */}
         <div className="bg-[#FCFCF9] rounded-xl border border-[#E2E3DE] p-5">
           <div className="text-2xl font-bold text-[#20242B]">
             Learning
           </div>
 
           <div className="text-xs text-[#8A8F96] mt-1 font-medium">
-            What learnlog is about
+            What Learnlog is about
           </div>
         </div>
 

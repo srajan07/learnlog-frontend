@@ -5,7 +5,6 @@ import { getPosts } from "../../services/communityService";
 
 import thinkingDev from "../../assets/illustrations/thinking-dev.png";
 import communityDev from "../../assets/illustrations/community-dev.png";
-import samplePost from "../../assets/sample.png";
 
 function Dashboard() {
   const { user } = useAuth();
@@ -75,7 +74,7 @@ function Dashboard() {
               </div>
 
               {/* Illustration */}
-              <div className="flex justify-center items-end px-6 pt-2 pb-6 md:px-6 md:py-8 lg:px-8">
+              <div className="flex justify-center items-end px-6 pt-2 pb-6 md:py-8 lg:px-8">
                 <img
                   src={thinkingDev}
                   alt="A developer thinking while learning"
@@ -192,8 +191,8 @@ function Dashboard() {
                       <div className="flex flex-wrap gap-1.5 mt-5">
                         {post.tags.slice(0, 2).map((tag) => (
                           <span
-                            key={tag}
-                            className={`rounded-full ${style.tag} px-2.5 py-1 text-[10px] text-[#59616A]`}
+                            key={`${post._id}-${tag}`}
+                            className={`rounded-full ${style.tag} px-2.5 py-1 text-[11px] text-[#59616A]`}
                           >
                             {tag}
                           </span>
@@ -202,13 +201,15 @@ function Dashboard() {
                     )}
 
                     {/* Bottom */}
-                    <div className="mt-6 flex items-center justify-between">
-                      <span className="text-xs text-[#70757D]">
-                        A note from a learner
+                    <div className="mt-5 flex items-center gap-4 text-xs text-[#70757D]">
+                      <span className="inline-flex items-center gap-1.5">
+                        🤔
+                        <span>{post.reactionCount || 0}</span>
                       </span>
 
-                      <span className="text-xs font-semibold text-[#253044] group-hover:translate-x-0.5 transition-transform">
-                        Read →
+                      <span className="inline-flex items-center gap-1.5">
+                        💬
+                        <span>{post.commentCount || 0}</span>
                       </span>
                     </div>
 
@@ -261,133 +262,31 @@ function Dashboard() {
         </section>
 
         {/* =====================================================
-            HOW TO WRITE A GOOD POST
+            HOW TO WRITE A GOOD POST (teaser → guide page)
         ====================================================== */}
         <section className="mb-12">
-
-          <div className="max-w-2xl mb-5">
-            <p className="text-xs uppercase tracking-[0.16em] text-[#8A8F96]">
-              Before you post
-            </p>
-
-            <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold tracking-tight">
-              A good learning post is simple.
-            </h2>
-
-            <p className="mt-2 text-sm text-[#70757D] leading-relaxed">
-              You don't need to write a big tutorial. Tell someone what you
-              were learning, what confused you, and what finally made sense.
-            </p>
-          </div>
-
-          {/* Sample Post */}
-          <article className="bg-[#FCFCF9] border border-[#E2E3DE] rounded-2xl overflow-hidden">
-
-            <div className="p-5 sm:p-7 lg:p-8">
-
-              {/* Author */}
-              <div className="flex items-center gap-3 mb-6">
-
-                <div className="w-10 h-10 rounded-full bg-[#EEF1EA] text-[#587A63] flex items-center justify-center text-sm font-semibold shrink-0">
-                  A
-                </div>
-
-                <div>
-                  <p className="text-sm font-semibold text-[#20242B]">
-                    Ananya
-                  </p>
-
-                  <p className="text-xs text-[#8A8F96]">
-                    A learning note
-                  </p>
-                </div>
-
-              </div>
-
-              {/* Title */}
-              <h3 className="text-xl sm:text-2xl font-semibold tracking-tight">
-                Understanding C++ References
-              </h3>
-
-              {/* Learning Story */}
-              <div className="mt-4 max-w-3xl space-y-3">
-
-                <p className="text-sm sm:text-base text-[#70757D] leading-relaxed">
-                  I was confused about references in C++. I thought a
-                  reference created another copy of the variable.
-                </p>
-
-                <p className="text-sm sm:text-base text-[#70757D] leading-relaxed">
-                  What finally clicked was that a reference is just another
-                  name for the same variable.
-                </p>
-
-              </div>
-
-              {/* Code */}
-              <div className="mt-5 max-w-3xl rounded-xl border border-[#E2E3DE] overflow-hidden bg-[#F7F7F3]">
-
-                <div className="px-4 py-2.5 border-b border-[#E2E3DE]">
-                  <span className="text-[11px] uppercase tracking-[0.12em] font-medium text-[#8A8F96]">
-                    Example
-                  </span>
-                </div>
-
-                <pre className="p-4 sm:p-5 text-xs sm:text-sm leading-relaxed text-[#253044] overflow-x-auto">
-{`int x = 5;
-int& ref = x;
-
-ref = 10;
-
-cout << x; // 10`}
-                </pre>
-
-              </div>
-
-              {/* Image */}
-              <div className="mt-5 max-w-3xl">
-                <div className="rounded-xl overflow-hidden border border-[#E2E3DE] bg-[#F7F7F3]">
-                  <img
-                    src={samplePost}
-                    alt="Visual explanation of C++ references"
-                    className="w-full h-auto block"
-                  />
-                </div>
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mt-5">
-
-                <span className="rounded-full bg-[#F0F1EC] px-3 py-1 text-[11px] text-[#70757D]">
-                  C++
-                </span>
-
-                <span className="rounded-full bg-[#F0F1EC] px-3 py-1 text-[11px] text-[#70757D]">
-                  References
-                </span>
-
-                <span className="rounded-full bg-[#F0F1EC] px-3 py-1 text-[11px] text-[#70757D]">
-                  Beginner
-                </span>
-
-              </div>
-
-            </div>
-
-            {/* Note */}
-            <div className="border-t border-[#E2E3DE] bg-[#F7F7F3] px-5 sm:px-7 py-4 sm:py-5">
-
-              <p className="text-xs sm:text-sm text-[#70757D] leading-relaxed">
-                <span className="font-semibold text-[#20242B]">
-                  What makes this useful?
-                </span>{" "}
-                It shares the confusion, explains what finally clicked,
-                and gives an example that another learner can try.
+          <Link
+            to="/sample"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#FCFCF9] border border-[#E2E3DE] rounded-2xl p-5 sm:p-7 hover:border-[#D9C7A8] transition-colors"
+          >
+            <div className="min-w-0">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#8A8F96]">
+                Before you post
               </p>
 
+              <h2 className="mt-1.5 text-lg sm:text-xl font-semibold tracking-tight">
+                A good learning post is simple.
+              </h2>
+
+              <p className="mt-1.5 text-sm text-[#70757D] leading-relaxed">
+                See a real example and what makes it useful.
+              </p>
             </div>
 
-          </article>
+            <span className="inline-flex items-center gap-1.5 shrink-0 rounded-lg bg-[#253044] !text-white px-4 py-2.5 text-sm font-medium group-hover:bg-[#1D2636] transition-colors">
+              Read the guide →
+            </span>
+          </Link>
         </section>
 
         {/* =====================================================
