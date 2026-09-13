@@ -1,16 +1,43 @@
-# React + Vite
+# Learnlog
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Learnlog is a simple student learning community where students can share what they learned, what confused them, and what finally clicked.
 
-Currently, two official plugins are available:
+## Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The frontend is built with:
 
-## React Compiler
+- React
+- JavaScript
+- React Router
+- Axios
+- Tailwind CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## UI
 
-## Expanding the Oxlint configuration
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### Community
+![Community](./screenshots/community.png)
+
+### Post Details
+![Post Details](./screenshots/post-details.png)
+
+### Profile
+![Profile](./screenshots/profile.png)
+
+## Features
+
+- Student dashboard
+- Learning community
+- Create and edit learning posts
+- Post reactions
+- Comments
+- Search
+- Pagination
+- User profile
+- Responsive UI
+
+## Project
+
+Learnlog was built as a learning project to practice frontend and full-stack development.
