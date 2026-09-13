@@ -12,20 +12,6 @@ The frontend is built with:
 - Axios
 - Tailwind CSS
 
-## UI
-
-### Dashboard
-![Dashboard](./screenshots/dashboard.png)
-
-### Community
-![Community](./screenshots/community.png)
-
-### Post Details
-![Post Details](./screenshots/post-details.png)
-
-### Profile
-![Profile](./screenshots/profile.png)
-
 ## Features
 
 - Student dashboard
