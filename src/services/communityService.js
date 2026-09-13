@@ -1,15 +1,16 @@
 import api from "./api";
 
-/**
- * Community API Service
- * Handles CRUD operations for learner journey posts
- */
+export const getPosts = async (page = 1, search = "") => {
+  const response = await api.get("/community/posts", {
+    params: {
+      page,
+      limit: 10,
+      search,
+    },
+  });
 
-export const getPosts = async (params = {}) => {
-  const response = await api.get("/community/posts", { params });
   return response.data;
 };
-
 export const getMyPosts = async () => {
   const response = await api.get("/community/posts/me");
   return response.data;
@@ -36,5 +37,36 @@ export const deletePost = async (id) => {
 };
 export const toggleReaction = async (postId) => {
    const response = await api.post(`/community/posts/${postId}/reaction`);
+  return response.data;
+};
+
+export const getComments = async (postId) => {
+  const response = await api.get(`/community/posts/${postId}/comments`);
+  return response.data;
+};
+
+export const createComment = async (postId, content) => {
+  const response = await api.post(
+    `/community/posts/${postId}/comments`,
+    { content }
+  );
+
+  return response.data;
+};
+
+export const updateComment = async (commentId, content) => {
+  const response = await api.patch(
+    `/community/comments/${commentId}`,
+    { content }
+  );
+
+  return response.data;
+};
+
+export const deleteComment = async (commentId) => {
+  const response = await api.delete(
+    `/community/comments/${commentId}`
+  );
+
   return response.data;
 };
