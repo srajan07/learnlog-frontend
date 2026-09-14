@@ -15,24 +15,23 @@ function Dashboard() {
   const displayName = user?.name || user?.fullName || "Learner";
   const userInitial = displayName.charAt(0).toUpperCase();
 
-  useEffect(() => {
-    const loadPosts = async () => {
-      try {
-        const response = await getPosts();
+ useEffect(() => {
+  const loadPosts = async () => {
+    try {
+      const response = await getPosts();
 
-        if (response?.data) {
-          setRecentPosts(response.data.slice(0, 3));
-        }
-      } catch (error) {
-        console.error("Failed to load recent posts:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      const posts = response?.data?.posts || [];
 
-    loadPosts();
-  }, []);
+      setRecentPosts(posts.slice(0, 3));
+    } catch (error) {
+      console.error("Failed to load recent posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  loadPosts();
+}, []);
   return (
     <main className="min-h-screen bg-[#F7F7F3] text-[#20242B]">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
