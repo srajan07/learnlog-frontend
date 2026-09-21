@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import logo from "../../assets/logo.png";
 
 function Navbar() {
   const location = useLocation();
@@ -31,7 +32,7 @@ function Navbar() {
             className="flex items-center hover:opacity-80 transition-opacity"
           >
             <img
-              src="/src/assets/logo.png"
+              src={logo}
               alt="Learnlog logo"
               className="h-10 sm:h-11 object-contain"
             />

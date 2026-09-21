@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext.jsx";
 import bg from "../../assets/bg.png";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
+
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
