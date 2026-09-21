@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext.jsx";
 import bg from "../../assets/bg.png";
-
+import logo from "../assets/logo.png";
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ function Login() {
         {/* Logo & Heading */}
         <div className="text-center mb-8 space-y-2">
           <img
-            src="/src/assets/logo.png"
+            src={logo}
             alt="Learnlog logo"
             className="h-8 sm:h-9 mx-auto object-contain"
           />
