@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { verifyOtp } from "../services/authService";
+import logo from "../assets/logo.png";
 
 function VerifyOtp() {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ function VerifyOtp() {
 
           <Link to="/login" className="inline-block hover:opacity-80 transition-opacity">
             <img
-              src="/src/assets/logo.png"
+              src={logo}
               alt="Learnlog logo"
               className="h-8 sm:h-9 mx-auto object-contain"
             />
